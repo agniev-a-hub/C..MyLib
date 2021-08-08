@@ -22,7 +22,7 @@ void ft_bzero(void *s, size_t n)
 		return ;
 	}
 	str = (unsigned char *)s;
-	while (len-- > 0)
+	for (;len > 0; len--)
 	{
 		*str++ = 0;
 	}

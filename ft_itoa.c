@@ -19,7 +19,7 @@ int ft_atoi(const char *str)
 	int	i = 0;
 	int	sign;
 
-	while (space_check(*str))
+	while (space_check(*str) != 0)
     {
 		str++;
     }
@@ -30,7 +30,7 @@ int ft_atoi(const char *str)
     {
 		str++;
     }
-	while (ft_isdigit(str[i]))
+	while (ft_isdigit(str[i]) != 0)
 	{
 		res = (res * 10 + (str[i] - '0'));
 		i++;
@@ -43,5 +43,5 @@ int ft_atoi(const char *str)
         }
 		return (0);
 	}
-	return ((int)(res * sign));
+	return (int)(res * sign);
 }
