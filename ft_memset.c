@@ -25,18 +25,3 @@ void	*ft_memset(void *str, int c, size_t n)
 
 	return (str);
 }
-
-// int main()
-// {
-//     char o[6] = "\0e3lo!";
-//     char i[6] = "\0e3lo!";
-//     int z = 0;
-//     memset(o, z, 2);
-//     ft_memset(i, z, 2);
-//     for (int q = 0; q <= 6&& q <= 6; q++)
-//     {
-//         printf("%c - lib.   %c - custom.\n", i[q], o[q]);
-//     }
-
-//     return 0;
-// }

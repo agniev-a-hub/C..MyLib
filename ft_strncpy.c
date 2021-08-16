@@ -19,7 +19,6 @@
 // If the length of src is less than n, strncpy() writes additional
 // null bytes to dest to ensure that a total of n bytes are written.
 
-// A simple implementation of strncpy() might be:
 
 char *ft_strncpy(char * dest, const char * src, size_t n)
 {

@@ -26,15 +26,13 @@
 char *ft_strstr(const char *haystack, const char *needle)
 {
     size_t n = ft_strlen(needle);
- 
-    while (*haystack)
+
+    while (*haystack != '\0')
     {
-        if (!ft_memcmp(haystack, needle, n)) {
-            return ((char*)(haystack + n));
+        if ((ft_memcmp(haystack, needle, n) == 0)) {
+            return ((char*)(haystack));
         }
- 
         haystack++;
     }
- 
     return (NULL);
 }

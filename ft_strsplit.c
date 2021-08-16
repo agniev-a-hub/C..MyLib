@@ -2,15 +2,15 @@
 
 int	ft_strsize(char *s, char c);
 int	ft_len(char *s, char c, int point);
-char *plus_str(char *s, char *s2, char c, int point);
-char **plus_tab(char **str, char *s, char c, int point);
+char *ft_plus_str(char *s, char *s2, char c, int point);
+char **ft_plus_tab(char **str, char *s, char c, int point);
 
 char **ft_strsplit(char const *s, char c)
 {
 	char **str;
 	int	 size;
 	int	 i = 0;
-
+	
 	if (s)
 	{
 		size = ft_strsize((char *)s, c);
@@ -20,7 +20,7 @@ char **ft_strsplit(char const *s, char c)
 		{
 			while (s[i] == c && s[i])
 				i++;
-			str = plus_tab(str, (char *)s, c, i);
+			str = ft_plus_tab(str, (char *)s, c, i);
 			return (str);
 		}
 		return (NULL);
@@ -38,7 +38,7 @@ int	ft_strsize(char *s, char c)
         {
 			pointer++;
         }
-		while (s[pointer] != c && s[pointer])
+		while ((s[pointer]) != (c && s[pointer]))
 		{
 			size++;
 			pointer++;
@@ -60,7 +60,7 @@ int	ft_len(char *s, char c, int point)
 	return (len);
 }
 
-char *plus_str(char *s, char *s2, char c, int point)
+char *ft_plus_str(char *s, char *s2, char c, int point)
 {
 	int	 i = 0;
 
@@ -74,7 +74,7 @@ char *plus_str(char *s, char *s2, char c, int point)
 	return (s2);
 }
 
-char **plus_tab(char **str, char *s, char c, int point)
+char **ft_plus_tab(char **str, char *s, char c, int point)
 {
 	int	len;
 	int	i = point;
@@ -86,7 +86,7 @@ char **plus_tab(char **str, char *s, char c, int point)
 		str[f] = (char *)malloc(sizeof(char) * (len + 1));
 		if (str[f])
 		{
-			str[f] = plus_str(s, str[f], c, point);
+			str[f] = ft_plus_str(s, str[f], c, point);
 			f++;
 			i = (i + ft_len(s, c, point));
 			while (s[i] == c && s[i])
