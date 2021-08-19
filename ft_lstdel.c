@@ -12,7 +12,6 @@ void ft_lstdel(t_list **alst, void (*del)(void*, size_t))
 		del(list, list->content_size);
 		list = buffer;
 	}
-    // to be honest - I don't understand where to free it;
 	*alst = NULL;
 	free(*alst);
 }

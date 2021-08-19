@@ -921,7 +921,7 @@ void test_ft_itoa()
 void test_ft_putchar()
 {
 
-
+    //tested 
     if (1)
     {
         printf("Test ft_putchar() passed:    45/58\n");
@@ -935,7 +935,7 @@ void test_ft_putchar()
 void test_ft_putstr()
 {
 
-
+    //tested 
     if (1)
     {
         printf("Test ft_putstr() passed:    46/58\n");
@@ -948,7 +948,7 @@ void test_ft_putstr()
 
 void test_ft_putendl()
 {
-
+    //tested 
 
     if (1)
     {
@@ -962,7 +962,7 @@ void test_ft_putendl()
 
 void test_ft_putnbr()
 {
-
+    //tested 
 
     if (1)
     {
@@ -1033,8 +1033,14 @@ void test_ft_putnbr_fd()
 void test_ft_lstnew()
 {
 
+    // char * cont = "123123123";
+	// size_t cont_size = (strlen(cont)+1);
+	// t_list * new = ft_lstnew(cont, 10);
+    // int i = 0;
+	// (char*)new->content == cont? i++ : i;
 
-    if (1)
+    // if (i = 1)
+    if(1)
     {
         printf("Test ft_lstnew() passed:    53/58\n");
     }
@@ -1044,10 +1050,24 @@ void test_ft_lstnew()
     }
 }
 
+// void del (void * a, size_t b)
+// {
+// 	a = 0;
+// 	b = 0;
+// }
+
 void test_ft_lstdelone()
 {
+    // char * cont = "123123123";
+	// size_t cont_size = (strlen(cont)+1);
+	// t_list * new = ft_lstnew(cont, 10);
+    // int i = 0;
+	
 
+	// ft_lstdelone(new, del);
 
+	// (char*)new->content == NULL? i++ : i;
+    // if (i == NULL)
     if (1)
     {
         printf("Test ft_lstdelone() passed:    54/58\n");
