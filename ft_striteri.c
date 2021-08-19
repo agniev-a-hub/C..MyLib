@@ -2,17 +2,20 @@
 
 void ft_striteri(char *s, void (*f)(unsigned int, char *))
 {
-    unsigned int i;
-	if (s == NULL || f == NULL)
-    {
-		return ;
-    }
-	else 
-    {
-        while (*s)
-        {
-		    f(i, &s[i]);
-            i++;
-        }
-    }
+    int		i;
+	int		i2;
+
+	i = 0;
+	i2 = 0;
+    
+	if (s != NULL && f != NULL)
+	{
+		i = ft_strlen(s);
+		while (i2 < i)
+		{
+			(*f)(i2, s);
+			s++;
+			i2++;
+		}
+	}
 }

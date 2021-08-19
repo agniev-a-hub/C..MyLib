@@ -1,47 +1,56 @@
 #include "ft_lib.h"
 
-static int space_check(char c)
+
+static int	ft_get_size(int n)
 {
-	if (c == ' ' || c == '\r' || c == '\v')
-    {
-		return (1);
-    }
-	else if (c == '\t' || c == '\f' || c == '\n')
-    {
-		return (1);
-    }
-	return (0);
+	int size;
+
+	size = 0;
+	if (n <= 0)
+		size++;
+	while (n != 0)
+	{
+		n = n / 10;
+		size++;
+	}
+	return (size);
 }
 
-int ft_atoi(const char *str)
+static void	ft_fill_res(int size, int offset, int n, char *res)
 {
-	unsigned long long res = 0;
-	int	i = 0;
-	int	sign;
-
-	while (space_check(*str) != 0)
-    {
-		str++;
-    }
-
-	sign = ((*str == '-') ? -1 : 1);
-
-	if (*str == '-' || *str == '+')
-    {
-		str++;
-    }
-	while (ft_isdigit(str[i]) != 0)
+	while (size > offset)
 	{
-		res = (res * 10 + (str[i] - '0'));
-		i++;
+		res[size - 1] = n % 10 + '0';
+		n = n / 10;
+		size--;
 	}
-	if ((i > 19) || (res > 9223372036854775807))
-	{
-		if (sign == 1)
-        {
-			return (-1);
-        }
+}
+
+char		*ft_itoa(int n)
+{
+	int		offset;
+	int		size;
+	char	*res;
+
+	offset = 0;
+	size = ft_get_size(n);
+	if (!(res = (char *)malloc(sizeof(char) * size + 1)))
 		return (0);
+	if (n == -2147483648)
+	{
+		res[0] = '-';
+		res[1] = '2';
+		n = 147483648;
+		offset = 2;
 	}
-	return (int)(res * sign);
+	if (n < 0)
+	{
+		res[0] = '-';
+		offset = 1;
+		n = -n;
+	}
+	ft_fill_res(size, offset, n, res);
+	res[size] = '\0';
+	return (res);
 }
+

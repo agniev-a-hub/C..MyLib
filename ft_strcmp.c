@@ -25,8 +25,8 @@
 
 int ft_strcmp(const char *s1, const char *s2)
 {
-    while ('\0' != *s1 && *s1 == *s2) {
-        s1 +=1;
+    while (*s1 == '\0'  && *s1 == *s2) {
+        s1 ++;
         s2 ++;
     }
     int result1 = (int)*s1 - (int)*s2; 

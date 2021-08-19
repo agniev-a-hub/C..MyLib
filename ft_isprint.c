@@ -3,7 +3,7 @@
 int ft_isprint(int c)
 {
     int a = 0;
-    if (c > 31 || c<127)
+    if (c > 31 && c<127)
     {
         a++;
     }

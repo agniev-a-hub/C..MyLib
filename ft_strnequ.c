@@ -2,7 +2,7 @@
 
 int ft_strnequ (char const * s1, char * s2, size_t n)
 {
-    int i = 0;
+    unsigned int i = 0;
 
     if (ft_strlen(s1) == ft_strlen(s2))
     {
@@ -11,7 +11,7 @@ int ft_strnequ (char const * s1, char * s2, size_t n)
             return 0;
         }
 	    while ((unsigned char)s1[i] == (unsigned char)s2[i] &&
-		(unsigned char)s1[i] != '\0' && (unsigned int)i < n - 1)
+		(unsigned char)s1[i] != '\0' && (unsigned int)i <= (n - 1))
         {
 		    i++;
         }
@@ -19,7 +19,8 @@ int ft_strnequ (char const * s1, char * s2, size_t n)
         {
 	        return 1;
         }
-        else{
+        else
+        {
             return 0;
         }
     }
