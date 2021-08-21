@@ -18,6 +18,7 @@ t_list * ft_lstnew(void const * content, size_t content_size)
     new_list->content = malloc(content_size);
     if (new_list->content == NULL)
     {
+        free(new_list);
         return NULL;
         }
     else
@@ -26,5 +27,5 @@ t_list * ft_lstnew(void const * content, size_t content_size)
         new_list->content_size = content_size;
     }
     new_list->next = NULL;
-    return new_list;    
+    return new_list;
 }

@@ -71,27 +71,26 @@ all: $(NAME)
 
 $(NAME): $(OBJ)
 	echo "\lib compiling"
-	ar rc $(NAME) $(OBJ)
-	ranlib $(NAME)
+	@ar rc $(NAME) $(OBJ)
+	@ranlib $(NAME)
 
 $(OBJ): $(FILES)
 
 	echo "\lib obj compiling"
-	gcc $(CFLAGS) $(FILES)
+	@gcc $(CFLAGS) $(FILES)
 
 fclean: clean
 	echo "\ffull clean"
-	rm -f $(NAME)
-	rm -f main.o
-	rm -f a.out
+	@rm -f $(NAME)
+	@rm -f main.o
+	@rm -f a.out
 
 clean:
 	echo "\lib obj files deleting..."
-	rm -f $(OBJ)
+	@rm -f $(OBJ)
 
-allm:
-	make all
-	gcc $(MAIN) $(NAME)
+allm: all
+	@gcc -Wall -Wextra -Werror $(MAIN) $(NAME)
 	./a.out
 
 re: fclean all

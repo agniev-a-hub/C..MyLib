@@ -4,120 +4,133 @@
 #include <ctype.h>
 #include <stdlib.h>
 
-
-// testing of strsplit not done
-// void test_ft_strsplit()
-// {
-//     char ** dort = ft_strsplit("*make*me*pump*", '*');
-//     printf("%s\n",dort[0]);
-//     printf("%s\n",dort[1]);
-//     printf("%s\n",dort[2]);
-// }
-
 void test_ft_strlen()
 {
     if(strlen("6789\n0das23423..e23456") == ft_strlen("6789\n0das23423..e23456")){
         printf("Test ft_strlen() passed:    1/58\n");
+        return;
     }
-    else{
-        printf("Test ft_strlen() NOT passed:    1/58\n");
-    }
+    printf("Test ft_strlen() NOT passed:    1/58\n");
+
 }
 
 void test_ft_bzero()
 {
     char * asrc = "a-670a83432490asdfdsg6789";
-    char * a = malloc(ft_strlen(asrc)+1);
-    char * b = malloc(ft_strlen(asrc)+1);
-    ft_strcpy(a, asrc);
-    ft_strcpy(b, asrc);
+    const int len = strlen(asrc)+1;
+    char * a = malloc(len);
+    char * b = malloc(len);
+    strcpy(a, asrc);
+    strcpy(b, asrc);
     ft_bzero(a, 5);
     bzero(b, 5);
-    if ((int)*a == (int)*b)
-    {
-        a++;
-        b++;
-    }
-    else{
-        printf("Test ft_bzero() NOT passed:    2/58\n");
+    int result = memcmp(a,b,len);
+    if (!result ){
+        printf("Test ft_bzero() passed:    2/58\n");
+        free(a);
+        free(b);
         return ;
-    }   
-    printf("Test ft_bzero() passed:    2/58\n");
-    a = '\0';
-    b = '\0';
+    }
+    printf("Test ft_bzero() NOT passed:    2/58\n");
     free(a);
     free(b);
 }
 
 void test_ft_atoi()
 {
-    if ((atoi("-12345qwert") == ft_atoi("-12345qwert"))&&(atoi("1234qwerty") == atoi("1234qwerty"))&&(atoi("123qw\tertyui") == atoi("123qw\tertyui")))
-    {
-        if ((atoi("12ertyu\biopjg") == ft_atoi("12ertyu\biopjg"))&&(atoi("-1dsfdsgfsdhdf") == atoi("-1dsfdsgfsdhdf"))&&(atoi("\ta\bdsfsgsddgs") == atoi("\ta\bdsfsgsddgs")))
-        {
-            printf("Test ft_atoi() passed:    3/58\n");
-        }
+    if (ft_atoi("-12345qwert") != atoi("-12345qwert")){
+        printf("Test case 1 ft_atoi() NOT passed:    3/58\n");
+        return;
     }
+    if (ft_atoi("1234qwerty") != atoi("1234qwerty")){
+        printf("Test case 2 ft_atoi() NOT passed:    3/58\n");
+        return;
+    }
+    if (ft_atoi("123qw\tertyui") != atoi("123qw\tertyui")){
+        printf("Test case 3 ft_atoi() NOT passed:    3/58\n");
+        return;
+    }
+    if (ft_atoi("12ertyu\biopjg") != atoi("12ertyu\biopjg")){
+        printf("Test case 4 ft_atoi() NOT passed:    3/58\n");
+        return;
+    }
+
+    if (ft_atoi("\ta\bdsfsgsddgs") != atoi("\ta\bdsfsgsddgs")){
+        printf("Test case 5 ft_atoi() NOT passed:    3/58\n");
+        return;
+    }
+    if (ft_atoi("   123qw\tertyui") != atoi("   123qw\tertyui")){
+        printf("Test case 6 ft_atoi() NOT passed:    3/58\n");
+        return;
+    }
+    if (ft_atoi("0123qw\tertyui") != atoi("0123qw\tertyui")){
+        printf("Test case 7 ft_atoi() NOT passed:    3/58\n");
+        return;
+    }
+    if (ft_atoi("0123qw\tertyui") != atoi("0123qw\tertyui")){
+        printf("Test case 8  ft_atoi() NOT passed:    3/58\n");
+        return;
+    }
+    if (ft_atoi("-0123qw\tertyui") != atoi("-0123qw\tertyui")){
+        printf("Test case 9 ft_atoi() NOT passed:    3/58\n");
+        return;
+    }
+    if (ft_atoi("-q0123qw\tertyui") != atoi("-q0123qw\tertyui")){
+        printf("Test case 10 ft_atoi() NOT passed:    3/58\n");
+        return;
+    }
+    printf("Test ft_atoi() passed:    3/58\n");
 }
 
 void test_ft_memset()
-{	
-	int ind = 0;
-    char o[6] = "\0e3lo!";
-    char i[6] = "\0e3lo!";
-    int z = 0;
-    memset(o, z, 2);
-    ft_memset(i, z, 2);
-    for (int q = 0; q <= 6; q++)
+{
+	int len = 6;
+    char dest1[6] = "\0e3lo!";
+    char dest2[6] = "\0e3lo!";
+    int filler = 'a';
+    memset(dest1, filler, 2);
+    ft_memset(dest2, filler, 2);
+    int res = memcmp(dest1,dest2,len);
+
+	if (res)
     {
-        if (o[q] == i[q])
-		{
-			ind++;
-		}
-    }
-	if (ind >= 6)
-	{
-		printf("Test ft_memset() passed:    4/58\n");
+        printf("Test ft_memset() NOT passed:    4/58\n");
+        return;
 	}
-	else
-	{
-		printf("Test ft_memset() NOT passed:    4/58\n");
-	}
-    // check the error
+	printf("Test ft_memset() passed:    4/58\n");
 }
 
 void test_ft_memccpy()
-{   
-    int count = 0;
+{
     char * string = "111\t\t\t-0192839qweqweN__dsasd";
-    char * dest1 = malloc(strlen(string)+1);
-    char * dest2 = malloc(strlen(string)+1);
-    char * dest3 = malloc(strlen(string)+1);
-    char * dest4 = malloc(strlen(string)+1);
-    memccpy(dest1, string, 'q', strlen(string));
-    ft_memccpy(dest2, string, 'q', strlen(string));
-    memccpy(dest3, string, 'q', 9);
-    ft_memccpy(dest4, string, 'q', 9);
-    for (int i = 0; i < strlen(string); i++)
-    {
-        if (dest1[i] == dest2[i])
-        {
-            count++;
-        }
+    int len1 = strlen(string)+1;
+    int len2 = 9;
+    int lenToCmp = 14;
+    char * dest1 = malloc(len1);
+    char * dest2 = malloc(len1);
+    char * dest3 = malloc(len1);
+    char * dest4 = malloc(len1);
+    memccpy(dest1, string, 'q', len1);
+    ft_memccpy(dest2, string, 'q', len1);
+    memccpy(dest3, string, 'q', len2);
+    ft_memccpy(dest4, string, 'q', len2);
+    if (memcmp(dest1,dest2,lenToCmp)){
+        printf("Test case 1 ft_memccpy() NOT passed:    5/58\n");
+        free(dest1);
+        free(dest2);
+        free(dest3);
+        free(dest4);
+        return;
     }
-    // printf("%s\n", dest3);
-    if (count == 28 && *dest3 == *dest4)
-    {
-        printf("Test ft_memccpy() passed:    5/58\n");
+    if (memcmp(dest3,dest4,len2)){
+        printf("Test case 2 ft_memccpy() NOT passed:    5/58\n");
+        free(dest1);
+        free(dest2);
+        free(dest3);
+        free(dest4);
+        return;
     }
-    else
-    {
-        printf("Test ft_memccpy() NOT passed:    5/58\n");
-    }
-    dest1 = '\0';
-    dest2 = '\0';
-    dest3 = '\0';
-    dest4 = '\0';
+    printf("Test ft_memccpy() passed:    5/58\n");
     free(dest1);
     free(dest2);
     free(dest3);
@@ -126,31 +139,32 @@ void test_ft_memccpy()
 
 void test_ft_memmove()
 {
-    
     char * test1 = "____Hello_little_friends\t\b\t Yo!";
     char * test2 = "Indeed_hello!";
-    char * buff1 = (char*)malloc(ft_strlen(test1)+1);
-    ft_strcpy(buff1, test1);
+    const int len1 = ft_strlen(test1)+1;
+    const int lenToCmp = 12;
+    char * buff1 = (char*)malloc(len1);
+    char * buff2 = (char*)malloc(len1);
+    memcpy(buff1,test1,len1);
 
-    char * test3 = "____123  123   123";
-    char * test4 = "123123123123  123123123123";
-    char * buff2 = (char*)malloc(ft_strlen(test4)+1);
-    ft_strcpy(buff2, test3);
+    void *actual = ft_memmove(buff1, test2, lenToCmp);
+    void *expected =  memmove(buff2, test2, lenToCmp);
 
-    if ( ft_memmove(buff1, test2, 200) == memmove(buff1, test2, 200) && ft_memmove(buff2, test4, 200) == memmove(buff2, test4, 200) )
-    {
-        printf("Test ft_memmove() passed:    6/58\n");
+    if (memcmp(actual,expected,15)){
+        printf("Test ft_memmove() case 1 NOT passed:    6/58\n");
+        free(buff1);
+        free(buff2);
+        return;
     }
-    else
-    {
-        printf("Test ft_memmove() NOT passed:    6/58\n");
+    if (memcmp(NULL,NULL,len1)){
+        printf("Test ft_memmove() case 2 NOT passed:    6/58\n");
+        free(buff1);
+        free(buff2);
+        return;
     }
-    // ft_memmove(buff1, test2, 200
-    // memmove(buff2, test4, 200)
-    buff1 = '\0';
-    buff2 = '\0';
     free(buff1);
     free(buff2);
+    printf("Test ft_memmove() passed:    6/58\n");
 }
 
 void test_ft_memchr()
@@ -159,25 +173,22 @@ void test_ft_memchr()
     if (((char*)memchr(string, 'Q', 36)) == ((char*)ft_memchr(string, 'Q', 36)))
     {
         printf("Test ft_memchr() passed:    7/58\n");
+        return;
     }
-    else{
-        printf("Test ft_memchr() NOT passed:    7/58\n");
-    }
+    printf("Test ft_memchr() NOT passed:    7/58\n");
+
 }
 
 void test_ft_memcmp()
 {
     char * string1 = "47823843242934239dajsdhsdabhYGDYGSDY";
     char * string2 = "47823843242934239dajsdhsdabhYGDYGSDYdasfasfs\n\n\n\n\t\t\t1231231----&*()";
-    int n = 0 <= 30? n++ : 30;
-    if ((memcmp(string1, string2, 30) == ft_memcmp(string1, string2, 30)))
-    {
+    int len = 30;
+    if ((memcmp(string1, string2, len) == ft_memcmp(string1, string2, len))){
         printf("Test ft_memcmp() passed:    8/58\n");
+        return;
     }
-    else
-    {
-        printf("Test ft_memcmp() NOT passed:    8/58\n");
-    }
+    printf("Test ft_memcmp() NOT passed:    8/58\n");
 
 }
 
@@ -185,197 +196,186 @@ void test_ft_memcpy()
 {
     char * src1;
     src1 = "oh_my_god_i";
+    int len = strlen(src1);
     char destin1[] = "56785678456785678";
-    if(memcpy(destin1, src1, 11) == ft_memcpy(destin1, src1, 11))
+    char destin2[] = "56785678456785678";
+    char*s1 = memcpy(destin1, src1, 11);
+    char*s2 = memcpy(destin2, src1, 11);
+    int res = memcmp(s1,s2,len);
+    if(!res)
     {
         printf("Test ft_memcpy() passed:    9/58\n");
+        return;
     }
-    else
-    {
-        printf("Test ft_memcpy() NOT passed:    9/58\n");
-    }
+    printf("Test ft_memcpy() NOT passed:    9/58\n");
+
 }
 
 void test_ft_strdup()
 {
-    // const char * s = "479123______    whf\n\n\niwe";
-    // char * c = ft_strdup(s);
-    // const char * s2 = "479whfiwe";
-    // char * c2 = ft_strdup(s);
+    const char * s1 = "479123______    whf\n\n\niwe";
+    char * c1 = ft_strdup(s1);
+    const char * s2 = "479whfiwe";
+    char * c2 = ft_strdup(s2);
 
-    // if (ft_strcmp(c, c2) == 0)
-    if (1)
+    if (strcmp(c1, s1) )
     {
-        printf("Test ft_strcmp() passed:    10/58\n");
+        printf("Test ft_strdup() case1 NOT passed:    10/58\n");
+        free(c1);
+        free(c2);
+        return;
     }
-    else{
-        printf("Test ft_strcmp() NOT passed:    10/58\n");
+
+    if (strcmp(c2, s2) )
+    {
+        printf("Test ft_strdup() case2 NOT passed:    10/58\n");
+        free(c1);
+        free(c2);
+        return;
     }
+    free(c1);
+    free(c2);
+    printf("Test ft_strdup()  passed:    10/58\n");
+
 }
 
 void test_ft_strcpy()
 {
-    // const char * s = "479123______    whf\n\n\niwe";
-    // char * c = malloc(sizeof(char)*(strlen(s)+1));
-    // char * c2 = malloc(sizeof(char)*(strlen(s)+1));
-    // strcpy(c, s);
-    // ft_strcpy(c2, s);
-    // if (ft_strcmp(c, c2) == 0)
-    if (1)
+    const char * s = "479123______    whf\n\n\niwe";
+    char * test1 = malloc(sizeof(char)*(strlen(s)+1));
+    char * test2 = malloc(sizeof(char)*(strlen(s)+1));
+    strcpy(test1, s);
+    ft_strcpy(test2, s);
+    if (strcmp(test1,test2))
     {
-        printf("Test ft_strcpy() passed:    11/58\n");
-    }
-    else{
         printf("Test ft_strcpy() NOT passed:    11/58\n");
+        free(test1);
+        free(test2);
+
     }
+    free(test1);
+    free(test2);
+    printf("Test ft_strcpy() passed:    11/58\n");
 }
 
 void test_ft_strncpy()
 {
-    // const char * s = "479123______    whf\n\n\niwe";
-    // char * c = malloc(sizeof(char)*(strlen(s)+1));
-    // char * c2 = malloc(sizeof(char)*(strlen(s)+1));
-    // strncpy(c, s, 15);
-    // ft_strncpy(c2, s, 15);
-    // if (ft_strcmp(c, c2) == 0)
-    if (1)
-    {
-        printf("Test ft_strncpy() passed:    12/58\n");
+    const char * s = "479123______    whf\n\n\niwe";
+    int len =strlen(s)+1;
+    char * expected = malloc(sizeof(char)*len);
+    char * actual = malloc(sizeof(char)*len);
+    strncpy(expected, s, 15);
+    ft_strncpy(actual, s, 15);
+
+    if (ft_strcmp(expected, actual) ){
+        free(expected);
+        free(actual);
+        printf("Test ft_strncpy() NOTpassed:    12/58\n");
     }
-    else{
-        printf("Test ft_strncpy() NOT passed:    12/58\n");
-    }   
-    // c = '\0';
-    // c2 = '\0';
-    // free(c);
-    // free(c2);
+    printf("Test ft_strncpy()  passed:    12/58\n");
+    free(expected);
+    free(actual);
 }
 
 void test_ft_strcat()
 {
-    // char * p1_1 = "123jasfs\n\t\njnasfndsak123    12321\b\t";
-    // char * p1_2 = "123jasfs\n\t\njnasfndsak123    12321\b\t";
-    // char * total1 = malloc(sizeof(char)*(strlen(p1_1)+strlen(p1_2)+1));
+    char * s1 = "first string\b\t";
+    char * s2= "second";
+    int size = sizeof(char)*(strlen(s1)+strlen(s2)+1);
+    char * actual = malloc(size);
+    char * expected = malloc(size);
 
-    // char * p2_1 = "123jasfs\n\t\njnasfndsak123    12321\b\t";
-    // char * p2_2 = "123jasfs\n\t\njnasfndsak123    12321\b\t";
-    // char * total2 = malloc(sizeof(char)*(strlen(p2_1)+strlen(p2_2)+1));
+    strcpy(actual, s1);
+    strcpy(expected,s1);
 
-    // ft_strcpy(total1, p1_1);
-    // ft_strcpy(total2, p2_1);
+    strcat(expected, s2);
+    ft_strcat(actual, s2);
 
-    // strcat(total1, p1_2);
-    // strcat(total2, p2_2);
-
-    // if (ft_strcmp(total1, total2) == 0)
-
-    if (1)
+    if (ft_strcmp(actual, expected))
     {
-        printf("Test ft_strcat() passed:    13/58\n");
+         printf("Test ft_strcat() NOT passed:    13/58\n");
+         return;
     }
-    else{
-        printf("Test ft_strcat() NOT passed:    13/58\n");
-    }
-
-    // total1 = '\0';
-    // total2 = '\0';
-    // free(total1);
-    // free(total2);
+    printf("Test ft_strcat()  passed:    13/58\n");
+    free(expected);
+    free(actual);
 
 }
 
 void test_ft_strncat()
 {
-    // char * p1_1 = "123jasfs\n\t\njnasfndsak123    12321\b\t";
-    // char * p1_2 = "123jasfs\n\t\njnasfndsak123    12321\b\t";
-    // char * total1 = malloc(sizeof(char)*(strlen(p1_1)+strlen(p1_2)+1));
+    char * s1 = "first string\b\t";
+    char * s2= "second";
+    int size = sizeof(char)*(strlen(s1)+strlen(s2)+1);
+    char * actual = malloc(size);
+    char * expected = malloc(size);
 
-    // char * p2_1 = "123jasfs\n\t\njnasfndsak123    12321\b\t";
-    // char * p2_2 = "123jasfs\n\t\njnasfndsak123    12321\b\t";
-    // char * total2 = malloc(sizeof(char)*(strlen(p2_1)+strlen(p2_2)+1));
+    strcpy(actual, s1);
+    strcpy(expected,s1);
+    int from = 5;
+    strncat(expected, s2,from);
+    ft_strncat(actual, s2,from);
 
-    // ft_strcpy(total1, p1_1);
-    // ft_strcpy(total2, p2_1);
-
-    // strncat(total1, p1_2, 7);
-    // strncat(total2, p2_2, 7);
-
-    // if (ft_strcmp(total1, total2) == 0)
-
-    if (1)
+    if (ft_strcmp(actual, expected))
     {
-        printf("Test ft_strncat() passed:    14/58\n");
+         printf("Test ft_strncat() NOT passed:    14/58\n");
+         return;
     }
-    else{
-        printf("Test ft_strncat() NOT passed:    14/58\n");
-    }
+    printf("Test ft_strncat()  passed:    14/58\n");
+    free(expected);
+    free(actual);
 
-    // total1 = '\0';
-    // total2 = '\0';
-    // free(total1);
-    // free(total2);
 }
 
 void test_ft_strlcat()
 {
-    // char * p1_1 = "123jasfs\n\t\njnasfndsak123    12321\b\t";
-    // char * p1_2 = "123jasfs\n\t\njnasfndsak123    12321\b\t";
-    // char * total1 = malloc(sizeof(char)*(strlen(p1_1)+strlen(p1_2)+1+1));
+    char * s1 = "first string\b\t";
+    char * s2= "second";
+    int size = sizeof(char)*(strlen(s1)+strlen(s2)+1);
+    char * actual = malloc(size);
+    char * expected = malloc(size);
 
-    // char * p2_1 = "123jasfs\n\t\njnasfndsak123    12321\b\t";
-    // char * p2_2 = "123jasfs\n\t\njnasfndsak123    12321\b\t";
-    // char * total2 = malloc(sizeof(char)*(strlen(p2_1)+strlen(p2_2)+1+1));
+    strcpy(actual, s1);
+    strcpy(expected,s1);
+    int from = 5;
+    int actualLen = strlcat(expected, s2,from);
+    int expectedLen = ft_strlcat(actual, s2,from);
 
-    // strcpy(total1, p1_1);
-    // strcpy(total2, p2_1);
-
-    // size_t s1= sizeof(total1);
-    // size_t s2= sizeof(total2);
-
-    // ft_strlcat(total1, p1_2, s1);
-    // strlcat(total2, p2_2, s2);
-
-    // if (strcmp(total1, total2) == 0)
-
-    if (1)
+    if (actualLen !=expectedLen )
     {
-        printf("Test ft_strlcat() passed:    15/58\n");
+         printf("Test ft_strlcat() NOT passed:    15/58\n");
+         return;
     }
-    else{
-        printf("Test ft_strlcat() NOT passed:    15/58\n");
-    }
+    printf("Test ft_strlcat()  passed:    15/58\n");
+    free(expected);
+    free(actual);
 
-    // total1 = '\0';
-    // total2 = '\0';
-    // free(total1);
-    // free(total2);
 }
 
 void test_ft_strchr()
-{   //lf0
+{
     char * test = "23456789fg\b\nhjkebvncxmh\tydbgdbgsa    #$0ghdsagjdbfhas";
-    
+
     if (strchr(test, '0') == ft_strchr(test, '0'))
     {
         printf("Test ft_strchr() passed:    16/58\n");
+        return;
     }
-    else{
-        printf("Test ft_strchr() NOT passed:    16/58\n");
-    }
+    printf("Test ft_strchr() NOT passed:    16/58\n");
 }
 
 void test_ft_strrchr()
 {
     char * test = "23456789fg\b\nhjkebvnc0xmh\tydbgdbgsa    #$0ghdsagjdbfhas";
-    
+
     if (strrchr(test, '0') == ft_strrchr(test, '0'))
     {
         printf("Test ft_strrchr() passed:    17/58\n");
+        return;
+    }
 
-    }
-    else{
-        printf("Test ft_strrchr() NOT passed:    17/58\n");
-    }
+    printf("Test ft_strrchr() NOT passed:    17/58\n");
+
 }
 
 void test_ft_strstr()
@@ -383,28 +383,27 @@ void test_ft_strstr()
     char * test = "23456789fg\b\nhjkebvnc0xmh\tydbgdbgsa    #$0ghdsagjdbfhas";
 
 
-    if (strstr(test, "gdbg") == ft_strstr(test, "gdbg"))
+    if (strstr(test, "gdbg") != ft_strstr(test, "gdbg"))
     {
-        printf("Test ft_strstr() passed:    18/58\n");
+        printf("Test ft_strstr() case1 NOT passed:    18/58\n");
+        return;
+    }
+    printf("Test ft_strstr()  passed:    18/58\n");
 
-    }
-    else{
-        printf("Test ft_strstr() NOT passed:    18/58\n");
-    }
 }
 
 void test_ft_strnstr()
 {
-    // char * test = "23456789fg\b\nhjkebvnc0xmh\tydbgdbgsa    #$0ghdsagjdbfhas";
+    char * test = "23456789fg\b\nhjkebvnc0xmh\tydbgdbgsa    #$0ghdsagjdbfhas";
 
-    // if (ft_strnstr(test, "gdbg", 45) == strnstr(test, "gdbg", 45))
-    if (1)
+    if (ft_strnstr(test, "gdbg", 45) == strnstr(test, "gdbg", 45))
     {
         printf("Test ft_strnstr() passed:    19/58\n");
+        return;
     }
-    else{
-        printf("Test ft_strnstr() NOT passed:    19/58\n");
-    }
+
+    printf("Test ft_strnstr() NOT passed:    19/58\n");
+
 }
 
 void test_ft_strcmp()
@@ -413,16 +412,15 @@ void test_ft_strcmp()
     char * b = "dsajfasdfiasdfsadfshbgaihdasbfaj";
     char * c = "dsajfasdfiasdfsadfshbgaihdasbfaj";
     char * d = "dsajfihdasbfaj";
-    if ((strcmp(a,b) && ft_strcmp(a,b)) == 0)
-    {
-        if(strcmp(c,d) == ft_strcmp(c,d))
-        {
-            printf("Test ft_strcmp() passed:    20/58\n");
-        }
+    if(strcmp(a,b) != ft_strcmp(a,b)){
+        printf("Test ft_strcmp() case 1 NOT passed:    20/58\n");
+        return;
     }
-    else{
-        printf("Test ft_strcmp() NOT passed:    20/58\n");
+    if((strcmp(c,d) && ft_strcmp(c,d))){
+        printf("Test ft_strcmp() case 2 NOT passed:    20/58\n");
+        return;
     }
+    printf("Test ft_strcmp() passed:    20/58\n");
 }
 
 void test_ft_strncmp()
@@ -431,16 +429,18 @@ void test_ft_strncmp()
     char * b = "dsajfasdfiasdfsadfshbgaihdasbfaj";
     char * c = "dsajfasdfiasdfsadfshbgaihdasbfaj";
     char * d = "r567890-cvbnm,.";
-    if ((strncmp(a,b,5) == ft_strncmp(a,b,5)))
+    if ((strncmp(a,b,5) != ft_strncmp(a,b,5)))
     {
-        if(strncmp(c,d,5) == ft_strncmp(c,d,5))
-        {
-            printf("Test ft_strncmp() passed:    21/58\n");
-        }
-    }
-    else{
         printf("Test ft_strncmp() NOT passed:    21/58\n");
+        return;
     }
+    if(strncmp(c,d,5) != ft_strncmp(c,d,5))
+    {
+        printf("Test ft_strncmp() NOT passed:    21/58\n");
+        return;
+    }
+
+    printf("Test ft_strncmp() passed:    21/58\n");
 }
 
 void test_ft_isalpha()
@@ -449,14 +449,26 @@ void test_ft_isalpha()
     char b = '1';
     char c = '\t';
 
-    if ((isalpha(a) && ft_isalpha(a)) != 0 && (isalpha(b) && ft_isalpha(b)) == 0 && (isalpha(c) && ft_isalpha(c)) == 0)
+    if (!(isalpha(a) && ft_isalpha(a)))
     {
-        printf("Test ft_isalpha() passed:    22/58\n");
+        printf("Test ft_isalpha() case 1 NOT passed:    22/58\n");
+        return;
     }
-    else
+
+    if (isalpha(b) && ft_isalpha(b))
     {
-        printf("Test ft_islpha() NOT passed:    22/58\n");
+        printf("Test ft_isalpha() case 2 NOT passed:    22/58\n");
+        return;
     }
+
+    if (isalpha(c) && ft_isalpha(c))
+    {
+        printf("Test ft_isalpha() case 3 NOT passed:    22/58\n");
+        return;
+    }
+
+    printf("Test ft_islpha() passed:    22/58\n");
+
 
 }
 
@@ -466,14 +478,24 @@ void test_ft_isdigit()
     char b = '1';
     char c = '\t';
 
-    if ((isdigit(a) && ft_isdigit(a)) == 0 && (isdigit(b) && ft_isdigit(b)) != 0 && (isdigit(c) && ft_isdigit(c)) == 0)
+    if ((isdigit(a) && ft_isdigit(a)))
     {
-        printf("Test ft_isdigit() passed:    23/58\n");
+        printf("Test ft_isdigit() case1 passed:    23/58\n");
+         return;
     }
-    else
+    if ((isdigit(b) && ft_isdigit(b)) == 0)
     {
-        printf("Test ft_isdigit() NOT passed:    23/58\n");
+        printf("Test ft_isdigit() case2 passed:    23/58\n");
+         return;
     }
+    if ((isdigit(c) && ft_isdigit(c)) != 0)
+    {
+        printf("Test ft_isdigit() case3 passed:    23/58\n");
+         return;
+    }
+
+    printf("Test ft_isdigit() passed:    23/58\n");
+
 }
 
 void test_ft_isalnum()
@@ -482,14 +504,23 @@ void test_ft_isalnum()
     char b = '1';
     char c = '\t';
 
-    if ((isalnum(a) && ft_isalnum(a)) != 0 && (isalnum(b) && ft_isalnum(b)) != 0 && (isalnum(c) && ft_isalnum(c)) == 0)
+    if (!(isalnum(a) && ft_isalnum(a)))
     {
-        printf("Test ft_isalnum() passed:    24/58\n");
+        printf("Test ft_isalnum() case 1 NOT passed:    24/58\n");
+        return;
     }
-    else
+    if (!(isalnum(b) && ft_isalnum(b)))
     {
-        printf("Test ft_isalnum() NOT passed:    24/58\n");
+        printf("Test ft_isalnum() case 2 NOT passed:    24/58\n");
+        return;
     }
+    if  (isalnum(c) && ft_isalnum(c))
+    {
+        printf("Test ft_isalnum() case 3 NOT passed:    24/58\n");
+        return;
+    }
+    printf("Test ft_isalnum()  passed:    24/58\n");
+
 }
 
 void test_ft_isascii()
@@ -497,15 +528,30 @@ void test_ft_isascii()
     char a = 'a';
     char b = '1';
     char c = '\t';
+    int d = 12321;
 
-    if ((isascii(a) && ft_isascii(a)) != 0 && (isascii(b) && ft_isascii(b)) != 0 && (isascii(c) && ft_isascii(c)) != 0)
+    if (!(isascii(a) && ft_isascii(a)))
     {
-        printf("Test ft_isascii() passed:    25/58\n");
+        printf("Test ft_isascii() case 1 NOT passed:    25/58\n");
+        return;
     }
-    else
+    if (!(isascii(b) && ft_isascii(b)))
     {
-        printf("Test ft_isascii() NOT passed:    25/58\n");
+        printf("Test ft_isascii() case 2 NOT passed:    25/58\n");
+        return;
     }
+    if (!(isascii(c) && ft_isascii(c)))
+    {
+        printf("Test ft_isascii() case 3 NOT passed:    25/58\n");
+        return;
+    }
+    if (isascii(d) && ft_isascii(d))
+    {
+        printf("Test ft_isascii() case 4 NOT passed:    25/58\n");
+        return;
+    }
+    printf("Test ft_isascii() passed:    25/58\n");
+
 }
 
 void test_ft_isprint()
@@ -514,153 +560,148 @@ void test_ft_isprint()
     char b = '1';
     char c = '\n';
 
-    if ((isprint(a) && ft_isprint(a)) != 0 && (isprint(b) && ft_isprint(b)) != 0 && (isprint(c) && ft_isprint(c)) == 0)
+    if (!(isprint(a) && ft_isprint(a)))
     {
-        printf("Test ft_isprint() passed:    26/58\n");
+        printf("Test ft_isprint() case 1 NOT passed:    26/58\n");
+        return;
     }
-    else
+    if (!(isprint(b) && ft_isprint(b)))
     {
-        printf("Test ft_isprint() NOT passed:    26/58\n");
+        printf("Test ft_isprint() case 1 NOT passed:    26/58\n");
+        return;
     }
+    if (isprint(c) && ft_isprint(c))
+    {
+        printf("Test ft_isprint() case 1 NOT passed:    26/58\n");
+        return;
+    }
+    printf("Test ft_isprint() passed:    26/58\n");
+
 }
 
 void test_ft_toupper()
 {
     char a = 'a';
-
-    if (toupper(a) == ft_toupper(a))
-    {
-        printf("Test ft_toupper() passed:    27/58\n");
-    }
-    else
+    char b = 'B';
+    if (toupper(a) != ft_toupper(a))
     {
         printf("Test ft_toupper() NOT passed:    27/58\n");
+        return;
     }
+    if (toupper(b) != ft_toupper(b))
+    {
+        printf("Test ft_toupper() NOT passed:    27/58\n");
+        return;
+    }
+
+    printf("Test ft_toupper() passed:    27/58\n");
+
 }
 
 void test_ft_tolower()
 {
     char a = 'A';
+    char b = 'b';
+    if (tolower(a) != ft_tolower(a))
+    {
+        printf("Test ft_tolower() case 1 NOT passed:    28/58\n");
+        return;
+    }
+    if (tolower(b) != ft_tolower(b))
+    {
+        printf("Test ft_tolower() case 2 NOT passed:    28/58\n");
+        return;
+    }
 
-    if (tolower(a) == ft_tolower(a))
-    {
-        printf("Test ft_tolower() passed:    28/58\n");
-    }
-    else
-    {
-        printf("Test ft_tolower() NOT passed:    28/58\n");
-    }
+    printf("Test ft_tolower() passed:    28/58\n");
+
 }
 
 void test_ft_memalloc()
 {
-    // char * a = ft_memalloc(10);
-    // char * b = ft_memalloc(10);
-
-    // if ((a == b)&& a!=NULL && b!=NULL)
-    if (1)
-    {
-        printf("Test ft_memalloc() passed:    29/58\n");
-    }
-    else
+    char * a = ft_memalloc(10);
+    if (!a)
     {
         printf("Test ft_memalloc() NOT passed:    29/58\n");
+        return;
     }
+    printf("Test ft_memalloc() passed:    29/58\n");
 
-    // a = '\0';
-    // b = '\0';
-    // free(a);
-    // free(b);
+    free(a);
 }
 
 void test_ft_memdel()
 {
-    // char * a = memalloc(10);
-    // char * b = ft_memalloc(10);
-    // ft_memdel((void*)a);
-    // ft_memdel((void*)b);
-
-    // if ((a != b))
-    if (1)
-    {
-        printf("Test ft_memdel() passed:    30/58\n");
-    }
-    else
-    {
+    char * a = malloc(123);
+    ft_memdel((void**)&a);
+    if (a){
         printf("Test ft_memdel() NOT passed:    30/58\n");
     }
+    printf("Test ft_memdel() passed:    30/58\n");
 }
 
 void test_ft_strnew()
 {
-    // char * a = ft_strnew(100);
-    // char * b = ft_strnew(100);
-    // char * c = ft_strnew(100);
-    // if( (*a != '\0')&& (b==c) )
-    if (1)
+    size_t len  = 100;
+    char * a = ft_strnew(len);
+
+    if(a)
     {
-        printf("Test ft_strnew() passed:    31/58\n");
+        for(int i = 0; i < 100;i++){
+            if (a[i]!=0){
+                 printf("Test ft_strnew() NOT passed:    31/58\n");
+                 free(a);
+            }
+        }
+
     }
-    else
-    {
-        printf("Test ft_strnew() NOT passed:    31/58\n");
-    }
+
+    printf("Test ft_strnew() passed:    31/58\n");
+    free(a);
 }
 
 void test_ft_strdel()
 {
-    // char * a = ft_strnew(100);
-    // char * b = NULL;
-    // char * c = "jisdhfiabisnfadsbfiadsn";
-
-    // if ((ft_strdel(a))&&(ft_strdel(b))&&(ft_strdel(c)==NULL))
-    if (1)
-    {
-        printf("Test ft_strdel() passed:    32/58\n");
+    char * a = ft_strnew(100);
+    char * b = NULL;
+    char * testString = "jisdhfiabisnfadsbfiadsn";
+    char *c = strdup(testString);
+    ft_strdel(&a);
+    ft_strdel(&b);
+    ft_strdel(&c);
+    if (a ) {
+        printf("Test ft_strdel() case 1 NOT passed:    32/58\n");
     }
-    else
-    {
-        printf("Test ft_strdel() NOT passed:    32/58\n");
+    if (b ) {
+        printf("Test ft_strdel() case 2 NOT passed:    32/58\n");
     }
+    if ( c) {
+        printf("Test ft_strdel() case 3 NOT passed:    32/58\n");
+    }
+    printf("Test ft_strdel() passed:    32/58\n");
 }
 
 void test_ft_strclr()
 {
-    // char * a = "jisdhfiabisnfadsbfiadsn";
-    // char * b = malloc(sizeof(char)*strlen(a)+1);
-    // ft_strcpy(b,a);
-    // int i = 0;
-    // ft_strclr(b);
-    // for (int c = 0; c<strlen(a); c++)
-    // {
-    //     if(b[c]!='\0')
-    //     {
-    //         i++;
-    //     }
-    // }
-    // if (i>0)
-
-    if (1)
+    char * constString = "jisdhfiabisnfadsbfiadsn";
+    char * stringToBeNulled = strdup(constString);
+    ft_strclr(stringToBeNulled);
+    int len = strlen(stringToBeNulled);
+    for (int i = 0; i <len; ++i)
     {
-        printf("Test ft_strclr() passed:    33/58\n");
+        if(stringToBeNulled[i]!='\0')
+        {
+            printf("Test ft_strclr() NOT passed:    33/58\n");
+            free(stringToBeNulled);
+            return;
+        }
     }
-    else
-    {
-        printf("Test ft_strclr() NOT passed:    33/58\n");
-    }
+    printf("Test ft_strclr() passed:    33/58\n");
 }
 
-void ft_toupper_iplus(unsigned int i, char * b)
+void test_iter_toupper(char * b)
 {
-    for (i = 0; i <= strlen(b); i++)
-    {
-        b[i] = toupper(b[i]);
-    }
-}
-
-void ft_toupper_i(char * b)
-{
-    for (int i = 0; i <= strlen(b); i++)
+    for (size_t i = 0; i <= strlen(b); i++)
     {
         b[i] = toupper(b[i]);
     }
@@ -668,123 +709,86 @@ void ft_toupper_i(char * b)
 
 void test_ft_striter()
 {
-
-    // char * a = "fnkdjafnjsdabfhasdbfahs423f32";
-    // char * b = malloc(sizeof(char)*strlen(a)+1);
-    // printf("malloc a\n");
-    // strcpy(b,a);
-
-    // ft_striter(b, (void*)ft_toupper_i);
-    // int ii = 0;
-    // int i = 0;
-    // int ascii;
-    // for (i; i < strlen(b); i++)
-    // {
-    //     if (b[i] >= 97 && b[i] <= 122)
-    //     {
-    //         ;
-    //     }
-    //     else{
-    //         ii++;
-    //     }
-    // }
-
-    // if (ii == 0)
-    if (1)
-    {
-        printf("Test ft_striter() passed:    34/58\n");
-    }
-    else
+    char * testConstString = "const";
+    char * testOutputString = "CONST";
+    char * b = strdup(testConstString);
+    ft_striter(b, test_iter_toupper);
+    int result = strcmp(b,testOutputString);
+    if (result)
     {
         printf("Test ft_striter() NOT passed:    34/58\n");
+        free(b);
+        return;
+    }
+    free(b);
+    printf("Test ft_striter()  passed:    34/58\n");
+
+}
+
+void test_iteri_toupper(unsigned int i, char * b)
+{
+    for (i = 0; i <= strlen(b); i++)
+    {
+        b[i] = toupper(b[i]);
     }
 }
 
 void test_ft_striteri()
 {
-
-    // char * a = "fnkdjafnjsdabfhasdbfahs423f32";
-    // char * b = malloc(sizeof(char)*strlen(a)+1);
-    // printf("malloc a\n");
-    // strcpy(b,a);
-
-    // ft_striter(b, (void*)ft_toupper_iplus);
-    // int ii = 0;
-    // int i = 0;
-    // int ascii;
-    // for (i; i < strlen(b); i++)
-    // {
-    //     if (b[i] >= 97 && b[i] <= 122)
-    //     {
-    //         ;
-    //     }
-    //     else{
-    //         ii++;
-    //     }
-    // }
-
-    // if (ii == 0)
-
-    if (1)
-    {
-        printf("Test ft_striteri() passed:    35/58\n");
-    }
-    else
+    char * testConstString = "const";
+    char * testOutputString = "CONST";
+    char * b = strdup(testConstString);
+    ft_striteri(b, test_iteri_toupper);
+    int result = strcmp(b,testOutputString);
+    if (result)
     {
         printf("Test ft_striteri() NOT passed:    35/58\n");
+        free(b);
+        return;
     }
+    free(b);
+    printf("Test ft_striteri()  passed:    35/58\n");
+
+}
+
+char test_map_upper(char c ){
+    return toupper(c);
 }
 
 void test_ft_strmap()
 {
-
-    // char * a;
-    // char * b = strmap(a, toupper);
-    // int i = 0;
-    // int ii = 0;
-    // for (i; i <= strlen(b); i++)
-    // {
-    //     isupper(b[i]))? ii: ii++;
-    // }
-
-    // if (ii = 0)
-
-
-    if (1)
-    {
-        printf("Test ft_strmap() passed:    36/58\n");
-    }
-    else
-    {
+    char * input = "string";
+    char * output = "STRING";
+    char * b = ft_strmap(input, test_map_upper);
+    if (strcmp(b,output)){
         printf("Test ft_strmap() NOT passed:    36/58\n");
+        free(b);
+        return;
     }
+
+    printf("Test ft_strmap() passed:    36/58\n");
+    free(b);
 }
 
-char test_to_upper_odd(int index, char a)
+char test_to_upper_odd(unsigned int index, char a)
 {
-    return (isupper(a) && index%2==0) ? ft_toupper(a) : a;
+    return isupper(a) && index%2!=0 ? toupper(a) : a;
 }
 
 void test_ft_strmapi()
 {
-    // char * a;
-    // char * b = strmapi(a, test_to_upper_odd);
-    // int i = 0;
-    // int ii = 0;
-    // for (i; i <= strlen(b); i++)
-    // {
-    //     (i%2 == 0 && is_upper(b[i]))? ii: ii++;
-    // }
-
-    // if (ii = 0)
-    if (1)
+    char * input = "const";
+    char* expectedOutput = "CoNsT";
+    char * b = ft_strmapi(input, test_to_upper_odd);
+    if (strcmp(b,expectedOutput))
     {
-        printf("Test ft_strmapi() passed:    37/58\n");
-    }
-    else
-    {
+        free(b);
         printf("Test ft_strmapi() NOT passed:    37/58\n");
+        return;
     }
+    free(b);
+    printf("Test ft_strmapi() NOT passed:    37/58\n");
+
 }
 
 void test_ft_strequ()
@@ -793,358 +797,410 @@ void test_ft_strequ()
     char b[] = "fdshf2432423";
     char c[] = "fdshf";
 
-    // if ((ft_strequ(a,b)) && (!ft_strequ(a,c)))
-    if(1)
+    if  (!ft_strequ(a,c))
     {
-        printf("Test ft_strequ() passed:    38/58\n");
+        printf("Test ft_strequ() case 1 NOT passed:    38/58\n");
+         return;
     }
-    else
+    if (ft_strequ(a,b))
     {
-        printf("Test ft_strequ() NOT passed:    38/58\n");
-        printf("%d\n",ft_strequ(a,b));
-        printf("%d\n",ft_strequ(a,c));
-        printf("%ld\n",ft_strlen(a));
-        printf("%ld\n",ft_strlen(b));
-        printf("%ld\n",ft_strlen(c));
-        printf("%s\n",a);
-        printf("%s\n",b);
-        printf("%s\n",c);
+        printf("Test ft_strequ() case 2 NOT passed:    38/58\n");
+        return;
     }
+
+    printf("Test ft_strequ()  passed:    38/58\n");
+
 }
 
 void test_ft_strnequ()
 {
-    char * a = "fdshf2432423\t";
-    char * b = "fdshf2432423\t";
-    char * c = "fdshf1432";
+    char a[] = "fdshf2432423";
+    char b[] = "fdshf2432423";
+    char c[] = "fdshf";
 
-    if ((ft_strnequ(a,b, 10) == 1) && (ft_strnequ(a,c, 10) != 1))
+    if  (ft_strnequ(a,c,13))
     {
-        printf("Test ft_strnequ() passed:    39/58\n");
+        printf("Test ft_strnequ() case 1 NOT passed:    39/58\n");
+         return;
     }
-    else
+    if (!ft_strnequ(a,b,6))
     {
-        printf("Test ft_strnequ() NOT passed:    39/58\n");
+        printf("Test ft_strnequ() case 2 NOT passed:    39/58\n");
+        return;
     }
+
+    printf("Test ft_strequ()  passed:    38/58\n");
 }
 
 void test_ft_strsub()
 {
+    char * a = "123456789";
+    char * b = ft_strsub(a, 1, 9);
+    if (strcmp(b, "23456789"))
+    {
+        printf("Test ft_strsub() NOT passed:    40/58\n");
+        free(b);
+        return;
+    }
 
-    // char * a = "123456789";
-    // char * b = ft_strsub(a, 1, 9);
-    // if (b == "23456789")
-    if(1)
-    {
-        printf("Test ft_strsub() passed:    40/58\n");
-    }
-    else
-    {
-        printf("Test ft_strmsub() NOT passed:    40/58\n");
-    }
+    printf("Test ft_strmsub()  passed:    40/58\n");
+
 }
 
 void test_ft_strjoin()
 {
-    // char * a = "jfdsfsd1";
-    // char * b = "1jsfsdffsdfs";
-    // char * ab = strjoin (a,b);
-
-    // unsigned int len = ft_strlen(a) + ft_strlen(b);
-
-    // char * a_test = malloc(sizeof(char)* len);
-    // a_test = ft_strcat(a_test, a);
-    // a_test = ft_strcat(a_test, b);
-
-    // if (ab == a_test)
-    if (1)
-    {
-        printf("Test ft_strjoin() passed:    41/58\n");
-    }
-    else
-    {
+    char * a = "jfdsfsd1";
+    char * b = "1jsfsdffsdfs";
+    char * expected = "jfdsfsd11jsfsdffsdfs";
+    char * ab = ft_strjoin (a,b);
+    if (strcmp(expected,ab)){
         printf("Test ft_strjoin() NOT passed:    41/58\n");
+        free(ab);
+        return;
     }
+    free(ab);
+    printf("Test ft_strjoin() passed:    41/58\n");
+
 }
 
 void test_ft_strtrim()
 {
-    // char * b = " 123123123 ";
-    // char * a = ft_strtrim(b);
-    // if (ft_strlen(a) == (strlen(b) - 2)
-    if (1)
-    {
-        printf("Test ft_strtrim() passed:    42/58\n");
-    }
-    else
+    char * input = " 123123123 ";
+    char * expected = "123123123";
+    char * a = ft_strtrim(input);
+    if (strcmp(a,expected))
     {
         printf("Test ft_strtrim() NOT passed:    42/58\n");
+        free(a);
+        return;
     }
+    free(a);
+    printf("Test ft_strtrim()  passed:    42/58\n");
+}
+
+void freeSplitted(char**splitted){
+    for (int i = 0; splitted[i]; i++){
+        free(splitted[i]);
+    }
+    free(splitted);
 }
 
 void test_ft_strsplit()
 {
 
-    // char * a = "***fsjdfs**ok*fjdsfsd*****";
-    // char ** mm = ft_strsplit(a, '*');
-    
+    char * a = "***first**second*third*****";
+    char **splited = ft_strsplit(a, '*');
+    const char*expected[] = {"first","second","third"};
 
-    // if (mm[0] == "fsjdfs" && mm[1] == "ok" && mm[2] == "fjdsfsd")
-    if(1)
-    {
-        printf("Test ft_strsplit() passed:    43/58\n");
+    for(int i = 0; splited[i];i++){
+        if (strcmp(splited[i], expected[i])){
+            printf("Test ft_strsplit() on word[%d] = %s  NOT passed:    43/58\n",i,expected[i]);
+            freeSplitted(splited);
+            return;
+        }
     }
-    else
-    {
-        printf("Test ft_strsplit() NOT passed:    43/58\n");
-    }
+
+    freeSplitted(splited);
+    printf("Test ft_strsplit()  passed:    43/58\n");
 }
 
 void test_ft_itoa()
 {
-
-    // int a = -85839;
-    // char * achar = ft_itoa(a);
-    // if (achar == "-85839")
-
-
-    if (1)
-    {
-        printf("Test ft_itoa() passed:    44/58\n");
-    }
-    else
+    int a = -85839;
+    char *expected = "-85839";
+    char * output = ft_itoa(a);
+    if (strcmp(expected,ft_itoa(a)))
     {
         printf("Test ft_itoa() NOT passed:    44/58\n");
+        free(output);
+        return;
     }
+
+    printf("Test ft_itoa() passed:    44/58\n");
+
 }
 
 void test_ft_putchar()
 {
-
-    //tested 
-    if (1)
-    {
-        printf("Test ft_putchar() passed:    45/58\n");
-    }
-    else
-    {
-        printf("Test ft_putchar() NOT passed:    45/58\n");
+    char *testString ="Test ft_putchar() passed:    45/58\n";
+    int len = strlen(testString);
+    for (int i = 0; i < len; ++i){
+        ft_putchar(testString[i]);
     }
 }
 
 void test_ft_putstr()
 {
-
-    //tested 
-    if (1)
-    {
-        printf("Test ft_putstr() passed:    46/58\n");
-    }
-    else
-    {
-        printf("Test ft_putstr() NOT passed:    46/58\n");
-    }
+    char *testString ="Test ft_putstr() passed:    46/58\n";
+    ft_putstr(testString);
 }
 
 void test_ft_putendl()
 {
-    //tested 
-
-    if (1)
-    {
-        printf("Test ft_putendl() passed:    47/58\n");
-    }
-    else
-    {
-        printf("Test ft_putendl() NOT passed:    47/58\n");
-    }
+    char *testString ="Test ft_putendl() passed:    47/58";
+    ft_putendl(testString);
 }
 
 void test_ft_putnbr()
 {
-    //tested 
+    char *testString ="Test ft_putnbr() passed:    ";
 
-    if (1)
-    {
-        printf("Test ft_putnbr() passed:    48/58\n");
-    }
-    else
-    {
-        printf("Test ft_putnbr() NOT passed:    48/58\n");
-    }
+    int currentTestNumber = 48;
+    int testLen = 58;
+    ft_putstr(testString);
+    ft_putnbr(currentTestNumber);
+    ft_putchar('/');
+    ft_putnbr(testLen);
+    ft_putchar('\n');
+
 }
 
 void test_ft_putchar_fd()
 {
-
-
-    if (1)
-    {
-        printf("Test ft_putchar_fd() passed:    49/58\n");
-    }
-    else
-    {
-        printf("Test ft_putchar_fd() NOT passed:    49/58\n");
+    char *testString ="Test ft_putchar_fd() passed:    45/58\n";
+    int len = strlen(testString);
+    for (int i = 0; i < len; ++i){
+        ft_putchar_fd(testString[i],1);
     }
 }
 
 void test_ft_putstr_fd()
 {
-
-
-    if (1)
-    {
-        printf("Test ft_putstr_fd() passed:    50/58\n");
-    }
-    else
-    {
-        printf("Test ft_putstr_fd() NOT passed:    50/58\n");
-    }
+    char *testString ="Test ft_putstr_fd() passed:    46/58\n";
+    ft_putstr_fd(testString,1);
 }
 
 void test_ft_putendl_fd()
 {
-
-
-    if (1)
-    {
-        printf("Test ft_putendl_fd() passed:    51/58\n");
-    }
-    else
-    {
-        printf("Test ft_putendl_fd() NOT passed:    51/58\n");
-    }
+    char *testString ="Test ft_putendl_fd() passed:    51/58";
+    ft_putendl_fd(testString,1);
 }
 
 void test_ft_putnbr_fd()
 {
-
-
-    if (1)
-    {
-        printf("Test ft_putnbr_fd() passed:    52/58\n");
-    }
-    else
-    {
-        printf("Test ft_putnbr_fd() NOT passed:    52/58\n");
-    }
+    char *testString ="Test ft_putnbr_fd() passed:    ";
+    int currentTestNumber = 52;
+    int testLen = 58;
+    ft_putstr(testString);
+    ft_putnbr_fd(currentTestNumber,1);
+    ft_putchar('/');
+    ft_putnbr(testLen);
+    ft_putchar('\n');
 }
 
 void test_ft_lstnew()
 {
+    char * content = "content";
+	size_t contentSize = (strlen(content)+1);
+	t_list * new = ft_lstnew(content, contentSize);
 
-    // char * cont = "123123123";
-	// size_t cont_size = (strlen(cont)+1);
-	// t_list * new = ft_lstnew(cont, 10);
-    // int i = 0;
-	// (char*)new->content == cont? i++ : i;
-
-    // if (i = 1)
-    if(1)
-    {
+    if(memcmp(content,new->content,contentSize) && new->content_size == contentSize){
         printf("Test ft_lstnew() passed:    53/58\n");
+        free(new->content);
+        free(new);
+        return;
     }
-    else
-    {
-        printf("Test ft_lstnew() NOT passed:    53/58\n");
-    }
+
+    printf("Test ft_lstnew() NOT passed:    53/58\n");
 }
 
-// void del (void * a, size_t b)
-// {
-// 	a = 0;
-// 	b = 0;
-// }
+void del (void * content, size_t size)
+{
+    memset(content,0,size);
+	free(content);
+}
 
 void test_ft_lstdelone()
 {
-    // char * cont = "123123123";
-	// size_t cont_size = (strlen(cont)+1);
-	// t_list * new = ft_lstnew(cont, 10);
-    // int i = 0;
-	
+    char * content = "content";
+	size_t contentSize = (strlen(content)+1);
+	t_list * new = ft_lstnew(content, contentSize);
 
-	// ft_lstdelone(new, del);
+	ft_lstdelone(&new, del);
+    if (new){
+         printf("Test ft_lstdelone() NOT passed:    54/58\n");
+         return;
+    }
+    printf("Test ft_lstdelone() passed:    54/58\n");
 
-	// (char*)new->content == NULL? i++ : i;
-    // if (i == NULL)
-    if (1)
-    {
-        printf("Test ft_lstdelone() passed:    54/58\n");
-    }
-    else
-    {
-        printf("Test ft_lstdelone() NOT passed:    54/58\n");
-    }
 }
-
+int lstLen(t_list*head){
+    if(!head){
+        return 0;
+    }
+    int i = 0;
+    while(head){
+        i++;
+        head = head->next;
+    }
+    return i;
+}
 void test_ft_lstdel()
 {
+    char * headContent = "content";
+	size_t headContentSize = (strlen(headContent)+1);
+    char * newHeadContent = "newHeadContent";
+	size_t newHeadContentSize = (strlen(newHeadContent)+1);
+    char * newHeadContent2 = "newHeadContent 2";
+	size_t newHeadContentSize2 = (strlen(newHeadContent2)+1);
 
+    t_list*head = ft_lstnew(headContent, headContentSize);
+    t_list*newHead = ft_lstnew(newHeadContent, newHeadContentSize);
+    ft_lstadd(&head, newHead);
+    t_list*newHead2 = ft_lstnew(newHeadContent2, newHeadContentSize2);
+    ft_lstadd(&newHead, newHead2);
+    int curentLen = lstLen(newHead2);
+    if (!curentLen){
+         printf("Test ft_lstdel() NOT passed:    55/58\n");
+         return;
+    }
+    // printf("head = %p\nnewHead = %p\nnewHead2 = %p\n",head,newHead,newHead2);
+    ft_lstdel(&newHead2,del);
+    int listLengthAfterDel = lstLen(newHead2);
+    if (listLengthAfterDel){
+         printf("Test ft_lstdel() NOT passed:    55/58\n");
+         return;
+    }
+    printf("Test ft_lstdel() passed:    55/58\n");
 
-    if (1)
-    {
-        printf("Test ft_lstdel() passed:    55/58\n");
-    }
-    else
-    {
-        printf("Test ft_lstdel() NOT passed:    55/58\n");
-    }
 }
 
 void test_ft_lstadd()
 {
 
+    char * headContent = "content";
+	size_t headContentSize = (strlen(headContent)+1);
+    char * newHeadContent = "newHeadContent";
+	size_t newHeadContentSize = (strlen(newHeadContent)+1);
+    char * newHeadContent2 = "newHeadContent 2";
+	size_t newHeadContentSize2 = (strlen(newHeadContent2)+1);
 
-    if (1)
-    {
-        printf("Test ft_lstadd() passed:    56/58\n");
+    t_list*head = ft_lstnew(headContent, headContentSize);
+    t_list*newHead = ft_lstnew(newHeadContent, newHeadContentSize);
+    ft_lstadd(&head, newHead);
+    t_list*newHead2 = ft_lstnew(newHeadContent2, newHeadContentSize2);
+    ft_lstadd(&newHead, newHead2);
+    int curentLen = lstLen(newHead2);
+    if (curentLen != 3){
+         printf("Test ft_lstdel() NOT passed:    55/58\n");
+         ft_lstdel(&newHead2,del);
+         return;
     }
-    else
-    {
-        printf("Test ft_lstadd() NOT passed:    56/58\n");
-    }
+    ft_lstdel(&newHead2,del);
+    printf("Test ft_lstadd() passed:    56/58\n");
+
 }
 
+const char * valueForTest = "value";
+void testLstIterFunc(t_list*elem){
+
+    free(elem->content);
+    elem->content_size = strlen(valueForTest);
+    elem->content = malloc(elem->content_size);
+    memcpy(elem->content,valueForTest,elem->content_size);
+}
 void test_ft_lstiter()
 {
+    char * headContent = "content";
+    size_t headContentLen = strlen(headContent)+1;
 
 
-    if (1)
-    {
-        printf("Test ft_lstiter() passed:    57/58\n");
+    char * newHeadContent = "newHeadContent";
+    size_t newheadContentLen = strlen(newHeadContent)+1;
+
+
+    char * newHeadContent2 = "newHeadContent 2";
+    size_t newHeadContentLen2 = strlen(newHeadContent2)+1;
+
+    t_list*head = ft_lstnew(headContent, headContentLen);
+    t_list*newHead = ft_lstnew(newHeadContent, newheadContentLen);
+    ft_lstadd(&head, newHead);
+    t_list*newHead2 = ft_lstnew(newHeadContent2, newHeadContentLen2);
+    ft_lstadd(&newHead, newHead2);
+
+    ft_lstiter(newHead2,testLstIterFunc);
+    t_list*iter = newHead2;
+    const size_t newConentSize =  strlen(valueForTest);
+    while(iter){
+        if (iter->content_size !=newConentSize || memcmp(iter->content,valueForTest,newConentSize)){
+
+            printf("Test ft_lstiter() NOT passed:    57/58\n");
+            ft_lstdel(&newHead2,del);
+            return;
+        }
+        iter=iter->next;
     }
-    else
-    {
-        printf("Test ft_lstiter() NOT passed:    57/58\n");
-    }
+    ft_lstdel(&newHead2,del);
+    printf("Test ft_lstiter() passed:    57/58\n");
 }
 
+t_list* testLstMapFunc(t_list*elem){
+    char * newContent = ft_strjoin(valueForTest,elem->content);
+    size_t newContentLen = strlen(newContent);
+    return ft_lstnew(newContent, newContentLen);
+}
 void test_ft_lstmap()
 {
+ char * headContent = "content";
+    size_t headContentLen = strlen(headContent)+1;
 
 
-    if (1)
-    {
-        printf("Test ft_lstmap() passed:    58/58\n");
+    char * newHeadContent = "newHeadContent";
+    size_t newheadContentLen = strlen(newHeadContent)+1;
+
+
+    char * newHeadContent2 = "newHeadContent 2";
+    size_t newHeadContentLen2 = strlen(newHeadContent2)+1;
+
+    t_list*head = ft_lstnew(headContent, headContentLen);
+    t_list*newHead = ft_lstnew(newHeadContent, newheadContentLen);
+    ft_lstadd(&head, newHead);
+    t_list*newHead2 = ft_lstnew(newHeadContent2, newHeadContentLen2);
+    ft_lstadd(&newHead, newHead2);
+
+    ft_lstiter(newHead2,testLstIterFunc);
+
+    t_list*newListFromMap =ft_lstmap(newHead2, testLstMapFunc);
+    t_list*iter = newHead2;
+    t_list*mapIter = newListFromMap;
+    char * test= NULL;
+    size_t len = 0;
+    int cmpResult = 0;
+    while(iter) {
+        test = ft_strjoin(valueForTest,iter->content);
+        len = strlen(test);
+        cmpResult = memcmp(test,mapIter->content,len);
+        if (!mapIter ){
+            printf("Test ft_lstmap() NOT passed:    58/58\n");
+            ft_lstdel(&newHead2,del);
+            ft_lstdel(&newListFromMap,del);
+            return;
+        }
+        if(cmpResult || mapIter->content_size != len){
+            printf("Test ft_lstmap() NOT passed:    58/58\n");
+            ft_lstdel(&newHead2,del);
+            ft_lstdel(&newListFromMap,del);
+            return;
+        }
+        mapIter=mapIter->next;
+        iter=iter->next;
     }
-    else
-    {
-        printf("Test ft_lstmap() NOT passed:    58/58\n");
-    }
+    ft_lstdel(&newHead2,del);
+    ft_lstdel(&newListFromMap,del);
+    printf("Test ft_lstmap() passed:    58/58\n");
 }
 
 int main ()
 {
     printf("Testing lib for errors!\n");
     printf("Library to ft_ functions test:\n");
-    test_ft_strlen();
-    test_ft_bzero();
-    test_ft_atoi();
-    test_ft_memset();
-    test_ft_memccpy();
-    test_ft_memmove();
-    test_ft_memchr();
+    /*test1*/test_ft_strlen();
+    /*test2*/test_ft_bzero();
+    /*test3*/test_ft_atoi();
+    /*test4*/test_ft_memset();
+    /*test5*/test_ft_memccpy();
+    /*test6*/test_ft_memmove();
+    /*test7*/test_ft_memchr();
     test_ft_memcmp();
     test_ft_memcpy();
     test_ft_strdup();
@@ -1199,7 +1255,7 @@ int main ()
     test_ft_lstmap();
 
     printf("Tests has been finished.\n");
-    
+
     return 0;
 }
 

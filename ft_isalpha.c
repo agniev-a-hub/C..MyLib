@@ -7,5 +7,5 @@ char ft_isupper_alpha(char c){
    return c >= 'A' && c <= 'Z';
 }
 char ft_isalpha(char c){
-    return (ft_islower_alpha(c) || ft_isupper_alpha(c) ? 1 : 0);
+    return ft_islower_alpha(c) || ft_isupper_alpha(c);
 }

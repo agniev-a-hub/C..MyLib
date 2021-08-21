@@ -17,15 +17,15 @@ char *ft_strmapi (const char *s, char (*f)(unsigned int, char))
         return NULL;
     }
 
-    ft_strcpy(resulting, s);
+  //  ft_strcpy(resulting, s);
 
-    while (resulting[i])
+    while (s[i])
     {
         resulting[i] = f(i, s[i]);
         i++;
     }
 
     resulting[i] = '\0';
-    
+
     return resulting;
 }
