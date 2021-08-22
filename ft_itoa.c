@@ -1,56 +1,55 @@
 #include "ft_lib.h"
 
-
-static int	ft_get_size(int n)
+static char	*ft_array(char *x, unsigned int numb, long int len)
 {
-	int size;
+	while (numb > 0)
+	{
+		x[len--] = 48 + (numb % 10);
+		numb = numb / 10;
+	}
+	return (x);
+}
 
-	size = 0;
+static long int	ft_len(int n)
+{
+	int					len;
+
+	len = 0;
 	if (n <= 0)
-		size++;
+		len = 1;
 	while (n != 0)
 	{
+		len++;
 		n = n / 10;
-		size++;
 	}
-	return (size);
+	return (len);
 }
 
-static void	ft_fill_res(int size, int offset, int n, char *res)
+char *ft_itoa(int n)
 {
-	while (size > offset)
-	{
-		res[size - 1] = n % 10 + '0';
-		n = n / 10;
-		size--;
-	}
-}
+	char *x;
+	long int len;
+	unsigned int numb;
+	int sign;
 
-char		*ft_itoa(int n)
-{
-	int		offset;
-	int		size;
-	char	*res;
-
-	offset = 0;
-	size = ft_get_size(n);
-	if (!(res = (char *)malloc(sizeof(char) * size + 1)))
-		return (0);
-	if (n == -2147483648)
-	{
-		res[0] = '-';
-		res[1] = '2';
-		n = 147483648;
-		offset = 2;
-	}
+	sign = 1;
+	len = ft_len(n);
+	x = (char *)malloc(sizeof(char) * (len + 1));
+	if (!(x))
+		return (NULL);
+	x[len--] = '\0';
+	if (n == 0)
+		x[0] = '0';
 	if (n < 0)
 	{
-		res[0] = '-';
-		offset = 1;
-		n = -n;
+		sign *= -1;
+		numb = n * -1;
+		x[0] = '-';
 	}
-	ft_fill_res(size, offset, n, res);
-	res[size] = '\0';
-	return (res);
+	else
+		numb = n;
+	x = ft_array(x, numb, len);
+	return (x);
 }
+
 

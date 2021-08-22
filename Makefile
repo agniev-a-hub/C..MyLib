@@ -90,9 +90,9 @@ clean:
 	@rm -f $(OBJ)
 
 allm: all
-	@gcc -Wall -Wextra -Werror $(MAIN) $(NAME)
+	@gcc $(MAIN) $(NAME)
 	./a.out
-
+# /*-Wall -Wextra -Werror*/
 re: fclean all
 
 rem: fclean allm
